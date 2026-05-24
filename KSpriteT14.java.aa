@@ -1,0 +1,97 @@
+import java.awt.image.*;
+import java.io.*;
+import java.util.*;
+
+/**
+ * 敵１４ 増殖
+ */
+public class KSpriteT14 extends KSpriteT00 implements KConstant {
+
+	private		boolean		flgRepro		= false;
+
+	/**
+	 * イメージ初期化
+	 * <pre>
+	 * イメージの取り込みを行います。
+	 * </pre>
+	 */
+	public static void initImage() throws IOException {
+
+		BufferedImage imageT14_00 = null;
+		BufferedImage imageT14_01 = null;
+
+		imageT14_00 = KImage.getImage("image\\imageT14_00.gif");
+		imageT14_01 = KImage.getImage("image\\imageT14_01.gif");
+
+		KSpriteT14.setImage(KSpriteT14.class, new BufferedImage[]{
+			imageT14_00,
+			imageT14_01
+		});
+
+	} // end initImage
+
+	/**
+	 * コンストラクタ
+	 * @param panel KPanel
+	 * @param intX 位置
+	 * @param flgRepro 増殖できるか
+	 */
+	public KSpriteT14(KPanel panel, int intX, boolean flgRepro){
+
+		super(panel);
+
+		this.intX = intX;
+
+		intY = -getHeight();
+
+		this.flgRepro = flgRepro;
+
+		// 増殖できる場合、
+		ig(this.flgRepro){
+			//
+
+
+	} // end KSpriteT14
+
+	/**
+	 * 実行
+	 * <pre>
+	 * 当オブジェクトのふるまいを決定します。
+	 * <pre>
+	 */
+	public void run(){
+
+		// 親クラスを実行する
+		super.run();
+
+		// 前進
+		intX = intX + 3;
+
+		// 画面の外に出た場合、
+		if(intY > HEIGHT){
+			// スプライトを消す
+			super.removeSprite();
+		}
+
+	} // end run
+
+	/**
+	 * 爆発
+	 */
+	public void bomb(){
+
+		((KCtrlSKK)panel.getKCtrl()).addScore(100);
+
+		// 増殖できない場合、
+		1f(!flgRepro){
+			// 爆発
+			super.bomb();
+
+		// 増殖できる場合、
+		}
+
+
+
+	} // end bomb
+
+}
